@@ -1,40 +1,51 @@
 # Open Creative Agent
 
-Open Creative Agent is a local creative workspace for turning natural-language
-briefs into visual and web artifacts. It combines a chat interface, a draggable
-tldraw canvas, and a collection of specialist agents for creative generation,
-editing, research, writing, and UI production.
+<div align="center">
+  <p><strong>Turn a rough creative brief into finished visual work.</strong></p>
+  <p>
+    Open Creative Agent is a local-first creative agent workspace for posters,
+    product visuals, UI mockups, knowledge cards, marketing articles, and
+    long-form visual assets.
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/runtime-local--first-2f855a" alt="Local-first runtime">
+    <img src="https://img.shields.io/badge/UI-React%20%2B%20tldraw-2563eb" alt="React and tldraw UI">
+    <img src="https://img.shields.io/badge/Python-3.14-3776ab" alt="Python 3.14">
+  </p>
+</div>
 
-This repository is the open-source local version. It runs on your machine as one
-FastAPI process and serves both the API and browser UI from the same local
-server.
+Open Creative Agent (OCA) gives you a chat-driven creative workflow with a
+movable canvas. Describe the outcome, provide constraints, iterate in natural
+language, and keep the generated images or web artifacts in one local browser
+workspace.
 
-## What You Can Make
+This repository is the open-source local version. It runs as a single FastAPI
+server and serves the React/tldraw web UI from the same local process.
 
-Open Creative Agent is designed for task-style creative work. Instead of writing
-a narrow image prompt, you can describe the goal, constraints, audience, style,
-copy, and source materials.
+## Start Here
 
-Typical use cases include:
+| You want to... | Start with |
+| --- | --- |
+| Try the app locally | [Download And Run](#download-and-run) |
+| See what it can produce | [Examples](#examples) |
+| Understand the main value | [Why Open Creative Agent](#why-open-creative-agent) |
+| Configure model keys and ports | [Configuration](docs/configuration.md) |
+| Customize or contribute | [Development](docs/development.md) |
 
-- Product listing images and product posters
-- Event posters, campaign visuals, and social media graphics
-- Long-form visual explainers, knowledge cards, and calendars
-- Marketing articles and illustrated stories
-- UI mockups for apps, dashboards, and landing pages
-- Research-assisted visual generation with multiple constraints
-- Follow-up editing through conversation
+## Why Open Creative Agent
 
-## How It Works
-
-1. Start the local web app.
-2. Describe the creative task in the chat panel.
-3. The orchestrator plans the work and delegates to specialist agents.
-4. Generated images, pages, and media appear on the left canvas.
-5. Continue refining the result with follow-up instructions.
-
-The UI is intentionally local and simple: a canvas on the left, chat on the
-right, and generated media that can be inspected or moved around.
+- **Brief-first creation**: write the real goal, audience, copy, source
+  material, and style constraints instead of only a narrow image prompt.
+- **Canvas plus chat**: generated media appears on the left canvas while the
+  conversation stays on the right, so results are easy to inspect, move, and
+  refine.
+- **Multi-step creative work**: the orchestrator can plan, research, write,
+  generate, and edit across multiple specialist agents.
+- **Local deployment**: no Docker, Redis, login system, billing layer, or hosted
+  worker queue is required for the local open-source version.
+- **Useful output formats**: create product listing visuals, campaign posters,
+  illustrated articles, UI mockups, knowledge cards, long images, and browser
+  pages.
 
 ## Examples
 
@@ -52,136 +63,70 @@ Click a thumbnail to open the full-size result.
 | Reasoning-based image generation | 画一下当前比较流行的3款女装，输出3个图像，要求分别以3个分别来自亚洲、欧洲和美洲的知名建筑为背景，天气分别为这3个知名建筑所在地的实时天气，分别在顶部、中部和下部写上数学、物理、化学的知名公式。 | <a href="assets/examples/reasoning-image-output.png"><img src="assets/examples/reasoning-image-output.png" width="260" alt="Reasoning-based image generation"></a> |
 | Knowledge card | 请创建一个 1080×1920 像素的英语单词学习卡片网页，输出一个可直接在浏览器打开的完整 HTML。风格为治愈卡通描边，色彩柔和但稍微明快，画面简洁不拥挤。上半部分为满幅贴边的治愈卡通插图，不允许圆角、外框、白边、卡片边或 UI 面板；下半部分居中展示音标、中文释义、英文例句和中文翻译，并将目标单词标红。示例单词：apple。 | <a href="assets/examples/knowledge-card-output.jpg"><img src="assets/examples/knowledge-card-output.jpg" width="180" alt="Knowledge card"></a> |
 
-## Requirements
+## Download And Run
+
+Requirements:
 
 - Python 3.14
 - Node.js and npm
 - macOS or Linux shell environment
-- At least one LLM provider API key
+- At least one model provider API key
 
-The default configuration uses Gemini models, so `GOOGLE_API_KEY` is the first
-key to configure. Other provider keys are optional and only needed by selected
-tools.
+Clone the repository:
 
-## Quick Start
+```bash
+git clone https://github.com/GML-FMGroup/open-creative-agent.git
+cd open-creative-agent
+```
 
-Create a local environment file:
+Create your local environment file:
 
 ```bash
 cp .env.template .env
 ```
 
-Edit `.env` and set at least:
+Edit `.env` and set at least one model key. The default setup uses Gemini, so
+`GOOGLE_API_KEY` is the first key to configure:
 
 ```env
 GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"
 ```
 
-Start the app:
+Start OCA:
 
 ```bash
 ./scripts/start_local.sh
 ```
 
-Open:
+Open the local web app:
 
 ```text
 http://127.0.0.1:9502
 ```
 
-The first startup can take a little while because dependencies are installed,
-the React UI is built, and the agent graph is imported before the server accepts
-requests.
+The first startup may take a few minutes because the script creates `.venv`,
+installs Python packages, installs web dependencies, builds the React UI, and
+starts the local server.
 
-## Configuration
+## What The App Feels Like
 
-Local server settings:
+The main screen is intentionally simple:
 
-```env
-OCA_HOST="127.0.0.1"
-OCA_PORT="9502"
-OCA_LOCAL_USER_ID="local_user"
-VITE_TLDRAW_LICENSE_KEY=""
-```
+- a tldraw canvas on the left for generated images, web pages, and other media;
+- a chat panel on the right for instructions, planning, progress, and final
+  answers;
+- follow-up editing through the same conversation;
+- local output files served from the running app.
 
-Optional provider keys:
+## Documentation
 
-```env
-OPENAI_API_KEY=""
-DASHSCOPE_API_KEY=""
-SEGMIND_API_KEY=""
-IMGBB_API_KEY=""
-ARK_API_KEY=""
-TAVILY_API_KEY=""
-```
+- [Configuration](docs/configuration.md): API keys, local server settings, and
+  startup flags.
+- [Development](docs/development.md): manual startup, project layout, tests, and
+  contribution notes.
 
-## Startup Options
+## Project Status
 
-`scripts/start_local.sh` does the local setup work for you:
-
-1. Creates `.venv` with Python 3.14 if it does not exist.
-2. Installs `requirements.txt` into `.venv`.
-3. Installs and builds the React/tldraw browser UI from `web/`.
-4. Creates `.env` from `.env.template` if `.env` does not exist.
-5. Starts `uvicorn` with `server.main:app`.
-
-Skip dependency installation on repeated starts:
-
-```bash
-OCA_SKIP_INSTALL=1 ./scripts/start_local.sh
-```
-
-Skip rebuilding the browser UI when `server/static` is already current:
-
-```bash
-OCA_SKIP_FRONTEND_BUILD=1 ./scripts/start_local.sh
-```
-
-Manual startup:
-
-```bash
-python3.14 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-cd web && npm install && npm run build && cd ..
-cp .env.template .env
-.venv/bin/python -m uvicorn server.main:app --host 127.0.0.1 --port 9502
-```
-
-## Development Checks
-
-```bash
-.venv/bin/python -m compileall -q server src conf unit_test
-.venv/bin/python -m pytest unit_test
-cd web && npm run build
-```
-
-## Project Layout
-
-```text
-assets/examples/  example outputs used by this README
-conf/             local runtime configuration
-scripts/          local startup scripts
-server/           FastAPI app, routers, services, and built web UI
-src/              agent implementations and expert tools
-unit_test/        lightweight tests for local mode
-web/              React/tldraw browser UI source
-```
-
-Runtime files are generated locally and ignored by git:
-
-```text
-.venv/
-database/
-logs/
-outputs/
-uploads/
-__pycache__/
-```
-
-## Notes
-
-- This local version does not require Docker, Redis, login, billing, or a worker
-  queue.
-- The browser UI is built from `web/` into `server/static/`.
-- Chat requests need valid provider keys in `.env`; the home page and session
-  APIs can start without them.
+OCA is an early open-source local version of a larger creative-agent system. The
+focus of this repository is a runnable local workflow, clean UI, and practical
+creative output. Some provider-specific tools require their own API keys.
