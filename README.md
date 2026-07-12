@@ -1,90 +1,43 @@
 # Open Creative Agent
 
-Open Creative Agent is a local-first creative multi-agent application built on
-FastAPI and Google ADK. The current open-source layout runs as one local Python
-process and serves both the API and browser UI from the same server.
+Open Creative Agent is a local creative workspace for turning natural-language
+briefs into visual and web artifacts. It combines a chat interface, a draggable
+tldraw canvas, and a collection of specialist agents for creative generation,
+editing, research, writing, and UI production.
 
-## Requirements
+This repository is the open-source local version. It runs on your machine as one
+FastAPI process and serves both the API and browser UI from the same local
+server.
 
-- Python 3.14
-- Node.js and npm
-- macOS or Linux shell environment
-- At least one LLM provider API key
+## What You Can Make
 
-The default configuration uses Gemini models, so `GOOGLE_API_KEY` is the first
-key to configure. Other providers are optional and only needed by selected tools.
+Open Creative Agent is designed for task-style creative work. Instead of writing
+a narrow image prompt, you can describe the goal, constraints, audience, style,
+copy, and source materials.
 
-## Quick Start
+Typical use cases include:
 
-```bash
-cp .env.template .env
-```
+- Product listing images and product posters
+- Event posters, campaign visuals, and social media graphics
+- Long-form visual explainers, knowledge cards, and calendars
+- Marketing articles and illustrated stories
+- UI mockups for apps, dashboards, and landing pages
+- Research-assisted visual generation with multiple constraints
+- Follow-up editing through conversation
 
-Edit `.env` and set at least:
+## How It Works
 
-```env
-GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"
-```
+1. Start the local web app.
+2. Describe the creative task in the chat panel.
+3. The orchestrator plans the work and delegates to specialist agents.
+4. Generated images, pages, and media appear on the left canvas.
+5. Continue refining the result with follow-up instructions.
 
-Then run:
+The UI is intentionally local and simple: a canvas on the left, chat on the
+right, and generated media that can be inspected or moved around.
 
-```bash
-./scripts/start_local.sh
-```
+## Examples
 
-Open the local UI:
-
-```text
-http://127.0.0.1:9502
-```
-
-The first startup can take a little while because the agent graph and expert
-tools are imported before the server accepts requests.
-
-## One-Command Startup
-
-`scripts/start_local.sh` does the local setup work for you:
-
-1. Creates `.venv` with Python 3.14 if it does not exist.
-2. Installs `requirements.txt` into `.venv`.
-3. Installs and builds the React/tldraw browser UI from `web/`.
-4. Creates `.env` from `.env.template` if `.env` does not exist.
-5. Starts `uvicorn` with `server.main:app`.
-
-You can override the host and port in `.env`:
-
-```env
-OCA_HOST="127.0.0.1"
-OCA_PORT="9502"
-OCA_LOCAL_USER_ID="local_user"
-VITE_TLDRAW_LICENSE_KEY=""
-```
-
-To skip dependency installation on repeated starts:
-
-```bash
-OCA_SKIP_INSTALL=1 ./scripts/start_local.sh
-```
-
-To skip rebuilding the browser UI when `server/static` is already current:
-
-```bash
-OCA_SKIP_FRONTEND_BUILD=1 ./scripts/start_local.sh
-```
-
-## Manual Startup
-
-```bash
-python3.14 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-cd web && npm install && npm run build && cd ..
-cp .env.template .env
-.venv/bin/python -m uvicorn server.main:app --host 127.0.0.1 --port 9502
-```
-
-## Example Prompts and Outputs
-
-Add example media under `assets/examples/` and reference it with relative paths.
 Click a thumbnail to open the full-size result.
 
 | Type | Prompt | Result |
@@ -99,22 +52,119 @@ Click a thumbnail to open the full-size result.
 | Reasoning-based image generation | 画一下当前比较流行的3款女装，输出3个图像，要求分别以3个分别来自亚洲、欧洲和美洲的知名建筑为背景，天气分别为这3个知名建筑所在地的实时天气，分别在顶部、中部和下部写上数学、物理、化学的知名公式。 | <a href="assets/examples/reasoning-image-output.png"><img src="assets/examples/reasoning-image-output.png" width="260" alt="Reasoning-based image generation"></a> |
 | Knowledge card | 请创建一个 1080×1920 像素的英语单词学习卡片网页，输出一个可直接在浏览器打开的完整 HTML。风格为治愈卡通描边，色彩柔和但稍微明快，画面简洁不拥挤。上半部分为满幅贴边的治愈卡通插图，不允许圆角、外框、白边、卡片边或 UI 面板；下半部分居中展示音标、中文释义、英文例句和中文翻译，并将目标单词标红。示例单词：apple。 | <a href="assets/examples/knowledge-card-output.jpg"><img src="assets/examples/knowledge-card-output.jpg" width="180" alt="Knowledge card"></a> |
 
-## Test
+## Requirements
+
+- Python 3.14
+- Node.js and npm
+- macOS or Linux shell environment
+- At least one LLM provider API key
+
+The default configuration uses Gemini models, so `GOOGLE_API_KEY` is the first
+key to configure. Other provider keys are optional and only needed by selected
+tools.
+
+## Quick Start
+
+Create a local environment file:
 
 ```bash
-.venv/bin/python -m unittest discover -s unit_test -v
-.venv/bin/python -m pip check
+cp .env.template .env
+```
+
+Edit `.env` and set at least:
+
+```env
+GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"
+```
+
+Start the app:
+
+```bash
+./scripts/start_local.sh
+```
+
+Open:
+
+```text
+http://127.0.0.1:9502
+```
+
+The first startup can take a little while because dependencies are installed,
+the React UI is built, and the agent graph is imported before the server accepts
+requests.
+
+## Configuration
+
+Local server settings:
+
+```env
+OCA_HOST="127.0.0.1"
+OCA_PORT="9502"
+OCA_LOCAL_USER_ID="local_user"
+VITE_TLDRAW_LICENSE_KEY=""
+```
+
+Optional provider keys:
+
+```env
+OPENAI_API_KEY=""
+DASHSCOPE_API_KEY=""
+SEGMIND_API_KEY=""
+IMGBB_API_KEY=""
+ARK_API_KEY=""
+TAVILY_API_KEY=""
+```
+
+## Startup Options
+
+`scripts/start_local.sh` does the local setup work for you:
+
+1. Creates `.venv` with Python 3.14 if it does not exist.
+2. Installs `requirements.txt` into `.venv`.
+3. Installs and builds the React/tldraw browser UI from `web/`.
+4. Creates `.env` from `.env.template` if `.env` does not exist.
+5. Starts `uvicorn` with `server.main:app`.
+
+Skip dependency installation on repeated starts:
+
+```bash
+OCA_SKIP_INSTALL=1 ./scripts/start_local.sh
+```
+
+Skip rebuilding the browser UI when `server/static` is already current:
+
+```bash
+OCA_SKIP_FRONTEND_BUILD=1 ./scripts/start_local.sh
+```
+
+Manual startup:
+
+```bash
+python3.14 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+cd web && npm install && npm run build && cd ..
+cp .env.template .env
+.venv/bin/python -m uvicorn server.main:app --host 127.0.0.1 --port 9502
+```
+
+## Development Checks
+
+```bash
+.venv/bin/python -m compileall -q server src conf unit_test
+.venv/bin/python -m pytest unit_test
+cd web && npm run build
 ```
 
 ## Project Layout
 
 ```text
-apps/          CLI entry points
-conf/          local runtime configuration
-server/        FastAPI app, routers, services, local web UI
-src/           agent implementations and expert tools
-unit_test/     lightweight tests for local mode
-web/           React/tldraw browser UI source
+assets/examples/  example outputs used by this README
+conf/             local runtime configuration
+scripts/          local startup scripts
+server/           FastAPI app, routers, services, and built web UI
+src/              agent implementations and expert tools
+unit_test/        lightweight tests for local mode
+web/              React/tldraw browser UI source
 ```
 
 Runtime files are generated locally and ignored by git:
