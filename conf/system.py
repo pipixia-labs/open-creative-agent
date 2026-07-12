@@ -60,13 +60,13 @@ class SystemConfig(BaseModel):
     def apply_runtime_env_overrides(self) -> "SystemConfig":
         """Apply local runtime overrides from environment variables."""
         str_map = {
-            "ACA_THINKING_LEVEL": "thinking_level",
-            "ACA_HTML_GEN_THINKING_LEVEL": "html_gen_thinking_level",
-            "ACA_ART_KNOWLEDGE_THINKING_LEVEL": "art_knowledge_thinking_level",
-            "ACA_LOCAL_USER_ID": "user_id_default",
+            "OCA_THINKING_LEVEL": "thinking_level",
+            "OCA_HTML_GEN_THINKING_LEVEL": "html_gen_thinking_level",
+            "OCA_ART_KNOWLEDGE_THINKING_LEVEL": "art_knowledge_thinking_level",
+            "OCA_LOCAL_USER_ID": "user_id_default",
         }
         int_map = {
-            "ACA_PORT": "api_port",
+            "OCA_PORT": "api_port",
         }
 
         for env_name, field_name in str_map.items():

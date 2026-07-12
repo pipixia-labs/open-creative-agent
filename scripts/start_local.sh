@@ -38,7 +38,7 @@ fi
 
 PYTHON="${VENV_DIR}/bin/python"
 
-if [[ "${ACA_SKIP_INSTALL:-0}" != "1" ]]; then
+if [[ "${OCA_SKIP_INSTALL:-0}" != "1" ]]; then
   echo "Installing Python dependencies..."
   "${PYTHON}" -m pip install -r requirements.txt
 fi
@@ -54,18 +54,18 @@ set -a
 set +a
 
 build_frontend() {
-  if [[ "${ACA_SKIP_FRONTEND_BUILD:-0}" == "1" ]]; then
-    echo "Skipping frontend build because ACA_SKIP_FRONTEND_BUILD=1."
+  if [[ "${OCA_SKIP_FRONTEND_BUILD:-0}" == "1" ]]; then
+    echo "Skipping frontend build because OCA_SKIP_FRONTEND_BUILD=1."
     return
   fi
 
   if ! command -v npm >/dev/null 2>&1; then
-    echo "npm was not found. Install Node.js/npm or set ACA_SKIP_FRONTEND_BUILD=1 if server/static is already built." >&2
+    echo "npm was not found. Install Node.js/npm or set OCA_SKIP_FRONTEND_BUILD=1 if server/static is already built." >&2
     exit 1
   fi
 
   pushd web >/dev/null
-  if [[ "${ACA_SKIP_INSTALL:-0}" != "1" ]]; then
+  if [[ "${OCA_SKIP_INSTALL:-0}" != "1" ]]; then
     echo "Installing frontend dependencies..."
     if [[ -f package-lock.json ]]; then
       npm ci
@@ -81,12 +81,12 @@ build_frontend() {
 
 build_frontend
 
-ACA_HOST="${ACA_HOST:-127.0.0.1}"
-ACA_PORT="${ACA_PORT:-9502}"
+OCA_HOST="${OCA_HOST:-127.0.0.1}"
+OCA_PORT="${OCA_PORT:-9502}"
 
 if [[ "${GOOGLE_API_KEY:-}" == "YOUR_GOOGLE_API_KEY" || -z "${GOOGLE_API_KEY:-}" ]]; then
   echo "Warning: GOOGLE_API_KEY is not configured. The UI can start, but chat requests may fail." >&2
 fi
 
-echo "Starting Open Creative Agent at http://${ACA_HOST}:${ACA_PORT}"
-exec "${PYTHON}" -m uvicorn server.main:app --host "${ACA_HOST}" --port "${ACA_PORT}"
+echo "Starting Open Creative Agent at http://${OCA_HOST}:${OCA_PORT}"
+exec "${PYTHON}" -m uvicorn server.main:app --host "${OCA_HOST}" --port "${OCA_PORT}"

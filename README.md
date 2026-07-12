@@ -54,22 +54,22 @@ tools are imported before the server accepts requests.
 You can override the host and port in `.env`:
 
 ```env
-ACA_HOST="127.0.0.1"
-ACA_PORT="9502"
-ACA_LOCAL_USER_ID="local_user"
+OCA_HOST="127.0.0.1"
+OCA_PORT="9502"
+OCA_LOCAL_USER_ID="local_user"
 VITE_TLDRAW_LICENSE_KEY=""
 ```
 
 To skip dependency installation on repeated starts:
 
 ```bash
-ACA_SKIP_INSTALL=1 ./scripts/start_local.sh
+OCA_SKIP_INSTALL=1 ./scripts/start_local.sh
 ```
 
 To skip rebuilding the browser UI when `server/static` is already current:
 
 ```bash
-ACA_SKIP_FRONTEND_BUILD=1 ./scripts/start_local.sh
+OCA_SKIP_FRONTEND_BUILD=1 ./scripts/start_local.sh
 ```
 
 ## Manual Startup

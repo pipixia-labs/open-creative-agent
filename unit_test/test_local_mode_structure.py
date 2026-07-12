@@ -109,6 +109,16 @@ class TestLocalModeStructure(unittest.TestCase):
                 self.assertIn("9502", path.read_text())
                 self.assertNotIn("9501", path.read_text())
 
+        legacy_env_prefix = "A" + "CA_"
+        for path in [
+            PROJECT_ROOT / ".env.template",
+            PROJECT_ROOT / "README.md",
+            PROJECT_ROOT / "scripts" / "start_local.sh",
+            PROJECT_ROOT / "conf" / "system.py",
+        ]:
+            with self.subTest(path=path):
+                self.assertNotIn(legacy_env_prefix, path.read_text())
+
 
 if __name__ == "__main__":
     unittest.main()
