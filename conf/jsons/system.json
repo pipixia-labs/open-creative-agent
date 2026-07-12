@@ -1,0 +1,30 @@
+{
+  "executor_replan_enabled": false,
+  "llm_model": "gemini/gemini-3.5-flash",
+  "thinking_level": "medium",
+  "orchestrator_llm_model": "gemini/gemini-3.5-flash",
+  "critic_llm_model": "gemini/gemini-3.5-flash",
+  "executor_llm_model": "gemini/gemini-3.5-flash",
+  "plan_critic_iter_num": 0,
+  "html_gen_thinking_level": "medium",
+  "html_gen_llm_model": "gemini/gemini-3.5-flash",
+  "art_knowledge_thinking_level": "medium",
+  "art_knowledge_llm_model": "gemini/gemini-3.5-flash",
+  "article_llm_model": "openai/gpt-5.5",
+  "science_llm_model": "gemini/gemini-3.5-flash",
+  "api_port": 9502,
+  "app_name": "OpenCreativeAgent",
+  "user_id_default": "local_user",
+  "session_id_default_prefix": "local_session_",
+  "max_iterations_orchestrator": 10,
+  "max_search_count": 10,
+  "image_output_dir": "outputs/images",
+  "video_output_dir": "outputs/videos",
+  "log_level": "INFO",
+  "log_file": "open_creative_agent_{time}.log",
+  "retention": "7 days",
+  "rotation": "10 MB",
+  "DEBUG_USERS": [
+    "local_user"
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "root_agent": [],
+  "expert_agents": [
+    {
+      "name": "ImageGenerationAgent",
+      "enable": true,
+      "description": "根据输入的文本生成图像。只能根据文本生成，不能接收参考图片。输入参数 'prompt' 可以为一个字符串或一个包含多个字符串的列表，取决于输入任务需要生成图片的数量。 'aspect_ratio' 是期望的宽高比，可以为string或者list，如果不指定默认为'9:16', 'resolution' 是期望的分辨率，可以为string或者list，如果不指定，默认值为'1K'。tool_name 表示采用那个模型，类型为string，不可以为list。 prompt、aspect_ratio 和 resolution要么全部都是string，要么全部都是list。如果全部是list，那么需要保证他们的长度相同。 \n #注意:\n 1. 如果没有特别指明，只需要输入一个prompt生成一张图片。如果需要生成多张图片，尽量一次性输入多个prompt而不是重复调用此agent。\n2. 如果生成任务较为复杂，必须一次性生成图片，禁止先生成后编辑。\n3. 你需要特别注意此agent只能接受文本，如果需要参考其他图片进行生成，请选择ImageEditingAgent。\n4. text2image的模型可以选择  nano_banana 或者 seedream，不填写tool_name的话默认选择 nano_banana。\n5. seedream 擅长制作宣传海报， nano_banana 擅长布局复杂的绘图。 \n6. nano_banana 自带一个搜索的工具，可以搜索常见的知名图像（知名建筑、名人、名画、实时天气等）并根据搜索结果生成图像。。",
+      "parameters": "`{'prompt': ['prompt1', 'prompt2', ...](必填), 'tool_name': 'null' | 'nano_banana' | 'seedream', 'aspect_ratio': '1:1'| '2:3'|'3:2'|'3:4'|'4:3'|'4:5'|'5:4'| '9:16'| '16:9'| '21:9', 'resolution': '1K' | '2K' | '4K'], 'current_info': '当前已经搜索到的信息或者分析得到的有帮助的信息'}`"
+    },
+    {
+      "name": "ImageGenerationAndEditingAgent",
+      "enable": true,
+      "description": "根据给定的输入图像来生成一个新的图像。可以是图像编辑类型的任务，也可以是参考图像生成或者是图像融合类的任务。编辑给定的图像和参考给定的图像来生成新的图像（包含复刻或者复刻、修改、保持一致性、融图等类型的任务），输入图片名称列表，可以是单张待编辑图片，也可以是待编辑图片与参考图片等多张图片。如果输入多张图片，需要在prompt中指明图片顺序，例如 `参考第二张图片，对第一张图片进行...`。此智能体不能将背景变透明、不能输出mask。\n #注意：  1.此agent只支持输入1个prompt对一组或者一个输入的图片进行编辑或参考生成，输入prompt是一个字符串。\n 2.除了普通图像编辑以外，包含参考图的图像生成或者风格迁移等任务也可以使用此agent。 \n 3. nano_banana 比较擅长一致性控制，能更好的保持除了编辑区域之外的区域不变，nano_banana 和 seedream 对于文字渲染更好一些。 \n 4. nano_banana 擅长多图融合生成新的张图。\n5. tool_name 如果不填，默认使用nano banana。\n6. 与 ImageGenerationAgent 的区别是 ImageGenerationAndEditingAgent 必定有至少一个输入的参考图像。 ",
+      "parameters": "`{'input_name': ['input_name_1', 'input_name_2',...]（必填）, 'prompt': 'string，编辑任务的描述'（必填）, 'tool_name': 'nano_banana | seedream', 'current_info': '当前已经搜索到的信息或者分析得到的有帮助的信息'}`"
+    },
+    {
+      "name": "ReasoningImageGenerationAgent",
+      "enable": true,
+      "description": "推理绘图智能体，这个智能体侧重**需要推理**的文生图任务。只能根据文本生成，不能接收参考图片。只能绘图，不能生成文章。只生成一个图像，不适合一次输入，生成多个图像的场景。输入参数 'prompt' 为一个字符串，为一个侧重需要推理的任务的描述，其他简单一点（直接描述、与reasoning无关）的文生图用ImageGenerationAgent。 输入为一个复杂的任务描述，不需要做步骤分解，输出可以1张或者多张图像。 'aspect_ratio' 是期望的宽高比，如果不指定默认为'9:16', 'resolution' 是期望的分辨率，如果不指定，默认值为'1K'。 这个智能体只有一个模型，即 nano_banana。它自带一个搜索的工具，可以搜索常见的知名图像（知名建筑、名人、名画、实时天气等）。",
+      "parameters": "`{'prompt': '基于推理来生成图像的任务的描述',  'aspect_ratio': '1:1' | '2:3' |'3:2' | '3:4' | '4:3' | '4:5' | '5:4' | '9:16' | '16:9' | '21:9', 'resolution': '1K' | '2K' | '4K', 'current_info': '当前已经搜索到的信息或者分析得到的有帮助的信息'}`"
+    },
+    {
+      "name": "VideoGenerationAgent",
+      "enable": true,
+      "description": "根据输入的文本或者图像生成视频。支持模式：\n1. mode='prompt'，即只根据文本的 prompt 生成视频，此时 input_img_list 为空；\n2. mode='first_frame'， 即根据 prompt 和 input_img_list[0]来生成视频，生成视频的首帧是输入的input_img_list[0]图像。 \n3. mode='first_frame_and_last', 根据 prompt 和 图像 input_img_list[0]、input_img_list[1]来生成视频，其中图像input_img_list[0] 和 input_img_list[1] 分别是生成视频的首帧和尾帧。\n4. mode='reference_asset'，即将 input_img_list 中所有图像作为参考图像来生成视频，此时生成视频的内容中包含 input_img_list 中的图像。\n5. mode=reference_style，即将 input_img_list 中所有图像作为参考图像来生成视频，此时生成视频的风格与 input_img_list 中的图像相同。输入参数 `aspect_ratio`控制视频的宽高比，其中`16:9`是宽屏，也是默认值；`9:16`是竖屏。  \n 注意事项：\n 1. 一个prompt只生成一个视频，如果要生成多个视频可以多次调用此agent。 \n2. veo 可以支持带音频的视频生成。 \n3. tool 不填的话默认使用 seedance 工具， mode不填默认为prompt模式。 \n4. 一般而言， veo 效果更好一点。\n5. 如果是mode='first_frame'或者 'first_frame_and_last_frame'的时候， prompt 可以不填。 ",
+      "parameters": "`{'prompt': 要生成的视频的提示词字符串类型, 'input_img_list': ['input_img_1', 'input_img_2', ...], 'tool_name': 'null' | 'seedance' | 'veo', 'mode': 'prompt' | 'first_frame' | 'first_frame_and_last_frame' | 'reference_asset' | 'reference_style', 'aspect_ratio': '16:9'(默认) | '9:16' }`"
+    },
+    {
+      "name": "ImageUnderstandingAgent",
+      "enable": true,
+      "description": "分析图像内容，输入为图像的名称列表以及对应的mode列表。mode 有 description、style、ocr 和 all四种模式，分别的功能是：分析图像内容、分析图像艺术风格、分析图像中的文字以及前面三种的内容都分析。注意：input_name 和 mode 的长度相同。如果要分析 img1 的 图像内容和风格，那么 input_name是 [img1, img1], mode 是 [description, style]。",
+      "parameters": "`{'input_name':  ['图片名称1', ...], 'mode': ['mode1', ...],  mode可选： 'description | style | ocr'}`"
+    },
+    {
+      "name": "ImageProcessingAgent",
+      "enable": true,
+      "description": "基本的图像处理智能体，输入为图像的名称列表以及对应的需要进行的处理类型 operation_type，当前支持的图像处理包括：背景透明化。注意：在一次调用中，所有的图像处理类型需要相同，也就是input_name 可以是列表，但是 processing_type 是一个单独的字符串。当前支持的处理包括：`background_transparent`：将输入图像的背景变透明。",
+      "parameters": "`{'input_name':  ['图片名称1', ...], 'processing_type': 字符串， 当前只可以使用： 'background_transparent'}`"
+    },
+    {
+      "name": "ImageToPromptAgent",
+      "enable": true,
+      "description": "分析图像内容、风格、文字、布局信息得到文生图模型生成这个图像的prompt，输入为图像的名称列表。如果要分析 img1、img2，那么 input_name是 [img1, img2]。",
+      "parameters": "`{'input_name':  ['图片名称1', ...]}`"
+    },
+    {
+      "name": "ArtKnowledgeAgent",
+      "enable": true,
+      "description": "具备视觉设计领域知识（图像生成、3D生成、视频制作、影视制作等），可以执行艺术设计优化方案生成。输入为原始任务以及参考图片（可选），输出为文本类型的设计方案。此agent会根据原始任务和参考图片输出专业的设计方案和基于设计方案的图像生成、视频生成的prompt。此agent应当主要被应用于需要专门进行设计（网页设计、名片设计、服装设计、排版设计、图像版的详情页、网页版的详情页、电商营销图像、视觉设计、色彩设计、影视制作、视频生成等）有关的任务,或者是需要分析参考图片来进行精细的图像生成、视频生成的场景。此agent能够同时完成一种以上的设计并输出一种以上的prompt或者方案，但是必须在任务中详细说明需要生成的设计方案和prompt的数量。对于原始任务的描述（即输入的prompt）应该尽可能详细，包含任务需要的细节、目标、背景、观众、以及预计使用的工具等，但是**不要输入你不确定的信息**。",
+      "parameters": "`{'prompt': '原始设计任务', 'input_img_name': ['图片名称1', ...](可选输入), 'current_info': '当前已经搜索到的信息或者分析得到的有帮助的信息'}`"
+    },
+    {
+      "name": "AdTextElementGenerationAgent",
+      "enable": true,
+      "description": "专业的文本类型营销元素生成专家，接受用户的输入的产品、商品图像，已经对应的文本描述，来为用户需求设计针对性的文本营销元素，用于各种媒体、店铺的图像、视频中的文本类型的营销元素。支持一次生成多套多样的文案，需要在任务描述里面说清楚。",
+      "parameters": "`{'prompt': '文本营销元素生成任务描述', 'input_img_name': ['图片名称1', ...](可选输入), 'current_info': '当前已经搜索到的信息或者分析得到的有帮助的信息'}`"
+    },
+    {
+      "name": "ArticleGenerationAgentv2",
+      "enable": true,
+      "description": "图文混排型文章的专业写手，输入是任务的描述task_query（必填）、参考图像 reference_image_name（可选）以及当前掌握的信息current_info。输出一个markdown格式的、带插图的文本，并且插图已经完成生成，放在当前路径下。这个智能体可以生成包括营销文章、童话故事、科普文章等图文混排的文章。擅长根据用户需求，考虑产品特性、流量和受众来输出一篇图文混排的营销文章。输出的文本可以经过html代码生成工具转成html页面来呈现。此智能体内部具备图像生成功能，不要额外规划图像生成步骤。",
+      "parameters": "`{'task_query': '文章撰写任务描述', 'reference_image_name': ['图片名称1','图片名称2', ...](可选输入), 'current_info': '当前已经搜索到的信息或者分析得到的有帮助的信息'}`"
+    },
+    {
+      "name": "PosterGenerationAgent",
+      "enable": true,
+      "description": "专业的'海报'设计师，这里的`海报`指比如poster、常见的海报、长图等。输入是任务的描述task_query（必填）、参考图像 reference_image_name（可选）以及当前掌握的信息current_info。输出一个json格式的、带插图的设计稿，并且插图已经完成生成，放在当前路径下。之后，html生成智能体 HTMLGenerationAgent 根据设计稿生成 海报的html代码。此智能体擅长根据用户需求，考虑产品特性、流量和受众来输出海报设计。输出的文本可以经过html代码生成工具转成html页面来呈现。此智能体内部具备图像生成功能，不要额外规划图像生成步骤。",
+      "parameters": "`{'task_query': '文章撰写任务描述', 'reference_image_name': ['图片名称1','图片名称2', ...](可选输入), 'current_info': '当前已经搜索到的信息或者分析得到的有帮助的信息'}`"
+    },
+    {
+      "name": "ScienceAgent",
+      "enable": true,
+      "description": "具备理科、工科、工程领域知识，擅长数学、物理、化学、生物、计算机等领域的问题，包括但不限于计算、算法、证明等。",
+      "parameters": "`{'prompt': '原始设计任务', 'input_img_name': ['图片名称1', ...](可选输入), 'current_info': '当前已经搜索到的信息或者分析得到的有帮助的信息'}`"
+    },
+    {
+      "name": "HTMLGenerationAgent",
+      "enable": true,
+      "description": "可以执行的任务：1）根据需求生成html代码，2）将素材填充到给定html中合适的位置。其中输入为用户的对html需求的描述、图像资源（可选）、需要填充到网页中的文本信息的字典（可选）、来自上一步或者其他agent的html代码（可选），3）修改来自上一步或者其他agent的html代码，调整素材位置、大小，字体大小、颜色等等。 智能体会根据任务需要和相关资源来输出专业的html代码。此agent应当主要被应用于需要专门进行html代码生成的场景。输入的 资源 参数中的资源最好包含资源的描述，与代码生成无关的信息不要填入资源字段。",
+      "parameters": "`{'prompt': '原始的网页设计任务', 'image_resource': [{'image_name': 'value_1','description': 'value_2'},...](可选输入), 'text_resource': [{'text_value': 'value_1','description': 'value_2'},...](可选输入)}`"
+    },
+    {
+      "name": "HTMLToImageAgent",
+      "enable": true,
+      "description": "执行将html代码和依赖的资源图像（必填）的视觉效果呈现成图像，利用 python 的 playwright 实现。调用HTMLToImageAgent前需要确保代码中的图像、占位符等已经被填充好。注意：当前只支持单个html 代码渲染，不支持多个html代码渲染，输入参数的 html_code 是字符串，不是list。input_img_name 是代码依赖的图像资源的文件名，必填。。",
+      "parameters": "`{'html_code': '其他agent生成的html代码','input_img_name': ['图片名称1', ...](必选输入), 'suggested_width': HTMLGenerationAgent建议的viewpoint的 width，可选项，默认为1024,  'suggested_height': HTMLGenerationAgent 建议的 viewpoint 的 height，可选项，默认为768 }`"
+    },
+    {
+      "name": "SearchAgent",
+      "enable": true,
+      "description": "在互联网上搜索与输入参数query相关的图片或文本，有三种模式：image, text, all。模式选择指南：如果任务需要图片作为参考，则选择`image`；如果任务需要获得诸如设计概念等知识性信息，则选择`text`；如果任务复杂且同时需要两种信息作为参考，则选择`all`。query 可以是单个query或者空格隔开的query，比如 'key1' 或者 'key1 key2'，也可以是用分号隔开的多个query，比如：'key1 key2;key3;key4 k4y5'。这个agent适合小规模的搜索和调研。",
+      "parameters": "`{'query': '需要搜索的内容', 'mode': 'image | text | all'}`"
+    },
+    {
+      "name": "PageGenerationByReferenceAgent",
+      "enable": true,
+      "description": "给定一个已经存在的、用户输入的参考图像（reference_image_name，海报、营销图、详情页等）、若干张素材图像（input_name）以及一个用户输入任务的描述（task_query），此智能体参考这个给定的图像的风格、布局、风格等，根据任务描述来输出一个新的图像。适合要复刻的海报有精确文字、复杂排版。任务举例：1. 复刻给定的输入海报/详情页；2. 参考给定的海报/营销图/详情页的布局/风格，针对xx商品，生成一个新的海报/详情页/营销图等。  专业的复刻专家，可以根据用户给定的图像（reference_image_name） 来通过网页生成一个图像，task_query中描述用户的任务，可以是复刻或者是基于给定的图像参考复刻并加修改，输出为图像。此智能体内部有html代码生成智能体、图像素材生成智能体和 html代码渲染成图像的智能体，不需要额外调用 HTMLGenerationAgent、ImageGenerationAgent、HTMLToImageAgent。",
+      "parameters": "`{'task_query': '类型：字符串，必填，表示用户的任务描述', 'reference_image_name': '类型：字符串，必填，表示参考的图像的文件名，数量一张。', 'input_name': ['input_name_1', 'input_name_2',...]（可选）, 'current_info': '当前已经分析得到的有帮助的信息，比如OCR等。强烈建议此处填写内容信息、OCR信息和对应的位置信息、布局信息、对齐信息、字体信息等。'  '}`"
+    },
+    {
+      "name": "UIGenerationAgent",
+      "enable": true,
+      "description": "处理UI设计方面的任务。输入为用户的任务描述，输出为html代码",
+      "parameters": "`{'task_query': '用户的任务描述'"
+    },
+    {
+      "name": "ExtractorAgent",
+      "enable": true,
+      "description": "根据用户的任务信息，分析搜索得到的长文本，提取出来里面和任务相关的信息。注意：这个智能体输出的不是文章，是每个长文里面和任务相关的信息片段。",
+      "parameters": "`{'task_query': '用户的任务描述', 'search_result': '上一步搜索工具的结果'}`"
+    },
+    {
+      "name": "ReadArtifactAgent",
+      "enable": true,
+      "description": "根据用户的任务信息，读取并处理artifact中的文本文件。可以是原封不动的输出，或者处理之后再输出。",
+      "parameters": "`{'task_query': '用户的任务描述', 'text_file_to_read': 'artifact中文本文件的名字列表'}`"
+    },
+    {
+      "name": "SearchQueryAgent",
+      "enable": true,
+      "description": "根据用户的任务信息，分析并输出需要搜索的query列表。一般用在SearchAgent前面用来给它生成搜索query。",
+      "parameters": "`{'task_query': '用户的任务描述' }`"
+    }
+  ]
+}

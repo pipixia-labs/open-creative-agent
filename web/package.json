@@ -1,0 +1,20 @@
+{
+  "name": "open-creative-agent-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "dev": "vite --host 127.0.0.1",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^6.3.5",
+    "typescript": "~5.8.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tldraw": "^4.4.0"
+  },
+  "devDependencies": {}
+}
