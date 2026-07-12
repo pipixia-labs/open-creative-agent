@@ -37,8 +37,8 @@ npm run build
 ## Project Layout
 
 ```text
-assets/examples/  example outputs used by the README
-conf/             local runtime configuration
+assets/           README media (examples, workspace screenshot)
+conf/             local runtime configuration and agent registry
 docs/             user and developer documentation
 scripts/          local startup scripts
 server/           FastAPI app, routers, services, and built web UI
@@ -58,3 +58,49 @@ The open-source local version runs as one FastAPI process:
 
 The local version does not require Docker, Redis, a login system, a billing
 layer, or a hosted worker queue.
+
+## Agent Architecture
+
+A chat request flows through three layers under `src/agents/`:
+
+1. **Orchestrator** (`src/agents/orchestrator/`) reads the brief plus session
+   state and produces a step-by-step plan.
+2. **Executor** (`src/agents/executor/`) runs the plan, dispatching each step
+   to one expert agent and folding results back into session state.
+3. **Experts** (`src/agents/experts/`) are 20 single-purpose agents built on
+   google-adk.
+
+The expert roster, grouped by what they do:
+
+| Group | Agents |
+| --- | --- |
+| Image generation | `ImageGenerationAgent` (Nano Banana / Seedream), `ReasoningImageGenerationAgent`, `ImageGenerationAndEditingAgent` |
+| Image analysis | `ImageUnderstandingAgent`, `ImageToPromptAgent`, `ImageProcessingAgent` (background removal) |
+| Video | `VideoGenerationAgent` (Veo / Seedance) |
+| Research | `SearchAgent`, `SearchQueryAgent`, `ExtractorAgent`, `ReadArtifactAgent` |
+| Design and copy | `ArtKnowledgeAgent`, `AdTextElementGenerationAgent`, `ScienceAgent` |
+| Composed deliverables | `ArticleGenerationAgentv2`, `PosterGenerationAgent`, `PageGenerationByReferenceAgent`, `UIGenerationAgent` |
+| Web rendering | `HTMLGenerationAgent`, `HTMLToImageAgent` (Playwright) |
+
+Two registration points must stay in sync when adding or removing an expert:
+
+- `conf/jsons/agent.json` — the description and parameters shown to the
+  orchestrator (set `enable: false` to hide an agent without deleting code);
+- `server/agents_manager.py` — instantiation and the `expert_agents` mapping.
+
+## Frontend
+
+The browser UI is a small Vite + React + TypeScript app in `web/` using the
+tldraw SDK for the canvas. `npm run build` outputs into `server/static/`, which
+FastAPI serves at `/`. During UI work, rebuild and restart with:
+
+```bash
+OCA_SKIP_INSTALL=1 ./scripts/start_local.sh
+```
+
+## Contribution Notes
+
+- Keep changes runnable: the app should start and `pytest unit_test` should
+  pass after every commit.
+- Describe the purpose, approach, and verification steps in pull requests.
+- Prefer small, reviewable iterations over large rewrites.

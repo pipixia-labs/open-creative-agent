@@ -1,132 +1,178 @@
-# Open Creative Agent
-
 <div align="center">
-  <p><strong>Turn a rough creative brief into finished visual work.</strong></p>
-  <p>
-    Open Creative Agent is a local-first creative agent workspace for posters,
-    product visuals, UI mockups, knowledge cards, marketing articles, and
-    long-form visual assets.
-  </p>
-  <p>
-    <img src="https://img.shields.io/badge/runtime-local--first-2f855a" alt="Local-first runtime">
-    <img src="https://img.shields.io/badge/UI-React%20%2B%20tldraw-2563eb" alt="React and tldraw UI">
-    <img src="https://img.shields.io/badge/Python-3.14-3776ab" alt="Python 3.14">
-  </p>
+
+<h1>🎨 Open Creative Agent</h1>
+
+<p><strong>Turn a rough idea into finished visual work — posters, product shots, illustrated articles, UI mockups, and short videos — in one local chat-and-canvas workspace.</strong></p>
+
+<p>
+  <a href="./README.md">English</a> |
+  <a href="./README.zh-CN.md">简体中文</a>
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/python-3.14-3776ab" alt="Python 3.14">
+  <img src="https://img.shields.io/badge/runtime-local--first-2f855a" alt="Local-first">
+  <img src="https://img.shields.io/badge/UI-React%20%2B%20tldraw-2563eb" alt="React + tldraw">
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen" alt="PRs welcome">
+</p>
+
 </div>
 
-Open Creative Agent (OCA) gives you a chat-driven creative workflow with a
-movable canvas. Describe the outcome, provide constraints, iterate in natural
-language, and keep the generated images or web artifacts in one local browser
-workspace.
+**Open Creative Agent (OCA)** is an open-source, local-first **multi-agent creative studio**. You describe the outcome in plain language — goal, audience, copy, source material, constraints — and an orchestrator plans the work across **20 specialist agents** for research, design knowledge, image generation and editing, video, articles, posters, and web/UI pages. Results land on a movable [tldraw](https://tldraw.dev) canvas next to the chat, ready to inspect, refine in follow-up messages, and download.
 
-This repository is the open-source local version. It runs as a single FastAPI
-server and serves the React/tldraw web UI from the same local process.
+One `git clone`, one script, one browser tab. No Docker, no account, no cloud backend.
+
+<table align="center">
+  <tr>
+    <td align="center"><a href="assets/examples/poster-edit-final.png"><img src="assets/examples/poster-edit-final.png" height="210" alt="Poster refined over four chat turns"></a></td>
+    <td align="center"><a href="assets/examples/amazon-product-output.png"><img src="assets/examples/amazon-product-output.png" height="210" alt="Amazon listing image set"></a></td>
+    <td align="center"><a href="assets/examples/ui-design-output.png"><img src="assets/examples/ui-design-output.png" height="210" alt="Mobile banking app UI"></a></td>
+    <td align="center"><a href="assets/examples/knowledge-card-output.jpg"><img src="assets/examples/knowledge-card-output.jpg" height="210" alt="Vocabulary knowledge card"></a></td>
+  </tr>
+</table>
 
 ## Start Here
 
-| You want to... | Start with |
+| You want to... | Go to |
 | --- | --- |
-| Try the app locally | [Download And Run](#download-and-run) |
-| See what it can produce | [Examples](#examples) |
-| Understand the main value | [Why Open Creative Agent](#why-open-creative-agent) |
-| Configure model keys and ports | [Configuration](docs/configuration.md) |
-| Customize or contribute | [Development](docs/development.md) |
+| Run it on your machine in ~5 minutes | [Quick Start](#-quick-start) |
+| See what it can produce | [Showcase](#%EF%B8%8F-showcase) |
+| Understand what makes it different | [Why Open Creative Agent](#-why-open-creative-agent) |
+| Configure API keys, models, ports | [Configuration](docs/configuration.md) |
+| Read the code, run tests, contribute | [Development](docs/development.md) |
 
-## Why Open Creative Agent
+## 📢 News
 
-- **Brief-first creation**: write the real goal, audience, copy, source
-  material, and style constraints instead of only a narrow image prompt.
-- **Canvas plus chat**: generated media appears on the left canvas while the
-  conversation stays on the right, so results are easy to inspect, move, and
-  refine.
-- **Multi-step creative work**: the orchestrator can plan, research, write,
-  generate, and edit across multiple specialist agents.
-- **Local deployment**: no Docker, Redis, login system, billing layer, or hosted
-  worker queue is required for the local open-source version.
-- **Useful output formats**: create product listing visuals, campaign posters,
-  illustrated articles, UI mockups, knowledge cards, long images, and browser
-  pages.
+- **2026-07** 🎉 Initial open-source release: local chat + canvas workspace, an orchestrator coordinating 20 specialist agents, and end-to-end generation of posters, product visuals, illustrated articles, UI pages, and videos.
 
-## Examples
+## 💡 Why Open Creative Agent
 
-Click a thumbnail to open the full-size result.
+- **Brief-first, not prompt-first.** Write the actual brief — audience, copy, product photos, style constraints — instead of compressing everything into one image prompt. The orchestrator decomposes it and routes each part to the right specialist.
+- **A real creative pipeline.** Search → design reasoning → asset generation → editing → layout → rendering. Marketing sets, illustrated articles, and detail pages come out assembled, not as loose fragments.
+- **Text that is actually correct.** Layout-heavy formats (posters, long images, knowledge cards, UI pages) are composed as web pages and rendered to pixels, so titles, dates, and body copy stay sharp and typo-free — the classic failure mode of pure text-to-image.
+- **Edit by conversation.** "Center the title, make it 1.5× larger, drop the QR code" — follow-up messages refine the previous result instead of regenerating from scratch.
+- **Chat + canvas, side by side.** Generated media appears on an infinite tldraw canvas you can arrange and compare, while planning and progress stream in the chat rail.
+- **Local-first and hackable.** One FastAPI process serving a React UI. Readable Python on [google-adk](https://github.com/google/adk-python), pluggable model providers, no hosted dependencies.
 
-| Type | Prompt | Result |
-| --- | --- | --- |
-| Art illustration set | 请设计四幅拼贴风格的插画，需要将美丽的风景拼贴进一些可爱的动物中，色彩明亮、具有视觉冲击力。 | <a href="assets/examples/art-illustration-set.png"><img src="assets/examples/art-illustration-set.png" width="220" alt="Art illustration set"></a> |
-| Amazon product listing images | 为这个产品生成亚马逊的主图、多视角图、场景图和细节图，并补充相应的文案，针对英语用户。注意生产图需要和输入的图像中的商品保持一致。使用 Nano Banana 来编辑图像。 | <a href="assets/examples/amazon-product-output.png"><img src="assets/examples/amazon-product-output.png" width="260" alt="Amazon product listing images"></a> |
-| Conversational poster editing | 初始：针对27届高交会做一个海报，相关信息可以搜索一下。确保文字清晰正确，标题清晰醒目。<br>编辑1：标题居中，颜色换一下，需要醒目一点。其他相关的文字可以放在海报的中部和下部。字体可以变大1.5倍。<br>编辑2：标题文字颜色不好看，换一个好看、醒目、与整体效果匹配的颜色。其他文字再往下一点，并换成黑色。<br>编辑3：去掉二维码的展示。其他部分不变。 | <a href="assets/examples/poster-edit-final.png"><img src="assets/examples/poster-edit-final.png" width="220" alt="Conversational poster editing"></a> |
-| Event text poster | 帮我根据以下标题做个活动海报：2025中国（深圳）全球烟斗艺术展。举办地点为：深圳国际会展中心。时间为：2025年11月20日-24日。主办方：深圳烟斗协会。海报上的其他相关文字可以帮我填充。注意标题醒目、文字不要错。 | <a href="assets/examples/event-text-poster.png"><img src="assets/examples/event-text-poster.png" width="220" alt="Event text poster"></a> |
-| Long-form visual | 制作一个竖版的长图，介绍中国的各个历史朝代。每个朝代配一段简单的介绍。 | <a href="assets/examples/long-form-visual.png"><img src="assets/examples/long-form-visual.png" width="180" alt="Long-form visual"></a> |
-| Marketing article | 针对给定的这个产品，生成一个小红书风格的营销文章。 | <a href="assets/examples/marketing-article-output.jpg"><img src="assets/examples/marketing-article-output.jpg" width="180" alt="Marketing article"></a> |
-| UI design | 设计一个移动端银行 App 的首页 UI。包含账户总余额、多张银行卡切换、最近 5 条交易记录，以及“转账 / 充值 / 理财”三个主要操作入口。整体风格需要专业、安全、可信，信息层级清晰，适合高频查看。 | <a href="assets/examples/ui-design-output.png"><img src="assets/examples/ui-design-output.png" width="220" alt="UI design"></a> |
-| Reasoning-based image generation | 画一下当前比较流行的3款女装，输出3个图像，要求分别以3个分别来自亚洲、欧洲和美洲的知名建筑为背景，天气分别为这3个知名建筑所在地的实时天气，分别在顶部、中部和下部写上数学、物理、化学的知名公式。 | <a href="assets/examples/reasoning-image-output.png"><img src="assets/examples/reasoning-image-output.png" width="260" alt="Reasoning-based image generation"></a> |
-| Knowledge card | 请创建一个 1080×1920 像素的英语单词学习卡片网页，输出一个可直接在浏览器打开的完整 HTML。风格为治愈卡通描边，色彩柔和但稍微明快，画面简洁不拥挤。上半部分为满幅贴边的治愈卡通插图，不允许圆角、外框、白边、卡片边或 UI 面板；下半部分居中展示音标、中文释义、英文例句和中文翻译，并将目标单词标红。示例单词：apple。 | <a href="assets/examples/knowledge-card-output.jpg"><img src="assets/examples/knowledge-card-output.jpg" width="180" alt="Knowledge card"></a> |
+## 🖼️ Showcase
 
-## Download And Run
+Everything below was produced by OCA from a single brief (plus follow-up edits where noted). Click any image for full size.
 
-Requirements:
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <a href="assets/examples/poster-edit-final.png"><img src="assets/examples/poster-edit-final.png" width="230" alt="Conversational poster editing"></a>
+      <br><b>Poster, refined over 4 turns</b>
+      <br><sub>"Make a poster for the 27th China Hi-Tech Fair — search for the details" → "center the title, brighter color, 1.5× larger" → "recolor the title, move body text down" → "remove the QR code".</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="assets/examples/amazon-product-output.png"><img src="assets/examples/amazon-product-output.png" width="230" alt="Amazon product listing images"></a>
+      <br><b>Amazon listing image set</b>
+      <br><sub>Main, multi-angle, lifestyle, and detail shots plus English copy — generated from one product photo, keeping the product identical.</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="assets/examples/reasoning-image-output.png"><img src="assets/examples/reasoning-image-output.png" width="230" alt="Reasoning-based image generation"></a>
+      <br><b>Reasoning-heavy generation</b>
+      <br><sub>Three trending outfits, each in front of a famous building from a different continent, under that city's real-time weather, annotated with a math, physics, and chemistry formula.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="assets/examples/art-illustration-set.png"><img src="assets/examples/art-illustration-set.png" width="230" alt="Art illustration set"></a>
+      <br><b>Illustration series</b>
+      <br><sub>Four collage-style illustrations blending scenic landscapes into animal silhouettes, in bright high-impact colors.</sub>
+    </td>
+    <td align="center">
+      <a href="assets/examples/ui-design-output.png"><img src="assets/examples/ui-design-output.png" width="230" alt="UI design"></a>
+      <br><b>Mobile app UI</b>
+      <br><sub>A banking-app home screen: balance, card switcher, recent transactions, transfer / top-up / invest actions — professional and trust-first.</sub>
+    </td>
+    <td align="center">
+      <a href="assets/examples/knowledge-card-output.jpg"><img src="assets/examples/knowledge-card-output.jpg" width="230" alt="Knowledge card"></a>
+      <br><b>Knowledge card</b>
+      <br><sub>1080×1920 vocabulary card as a ready-to-open web page: cartoon illustration on top, phonetics, meaning, and example sentence below.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="assets/examples/long-form-visual.png"><img src="assets/examples/long-form-visual.png" width="230" alt="Long-form visual"></a>
+      <br><b>Long-form vertical graphic</b>
+      <br><sub>A scrolling infographic of China's dynasties, each with a short introduction.</sub>
+    </td>
+    <td align="center">
+      <a href="assets/examples/marketing-article-output.jpg"><img src="assets/examples/marketing-article-output.jpg" width="230" alt="Marketing article"></a>
+      <br><b>Illustrated marketing article</b>
+      <br><sub>A Xiaohongshu-style product article with matching generated illustrations, written and composed end to end.</sub>
+    </td>
+    <td align="center">
+      <a href="assets/examples/event-text-poster.png"><img src="assets/examples/event-text-poster.png" width="230" alt="Event text poster"></a>
+      <br><b>Text-accurate event poster</b>
+      <br><sub>Exhibition poster with venue, dates, and organizer rendered exactly as provided — headline prominent, zero garbled text.</sub>
+    </td>
+  </tr>
+</table>
 
-- Python 3.14
-- Node.js and npm
-- macOS or Linux shell environment
-- At least one model provider API key
+## 🚀 Quick Start
 
-Clone the repository:
+Prerequisites: **Python 3.14+**, **Node.js + npm**, macOS or Linux, and a [Google AI Studio API key](https://aistudio.google.com/apikey) (free tier works).
 
 ```bash
 git clone https://github.com/GML-FMGroup/open-creative-agent.git
 cd open-creative-agent
-```
-
-Create your local environment file:
-
-```bash
-cp .env.template .env
-```
-
-Edit `.env` and set at least one model key. The default setup uses Gemini, so
-`GOOGLE_API_KEY` is the first key to configure:
-
-```env
-GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"
-```
-
-Start OCA:
-
-```bash
+cp .env.template .env      # put your GOOGLE_API_KEY inside
 ./scripts/start_local.sh
 ```
 
-Open the local web app:
+Then open **http://127.0.0.1:9502** and describe what you want to make.
 
-```text
-http://127.0.0.1:9502
-```
+The first start takes a few minutes: it creates `.venv`, installs Python and web dependencies, builds the React UI, and launches the server. Later starts are much faster — see [startup flags](docs/configuration.md#startup-flags).
 
-The first startup may take a few minutes because the script creates `.venv`,
-installs Python packages, installs web dependencies, builds the React UI, and
-starts the local server.
+Gemini alone covers planning, writing, page generation, and Nano-Banana image generation. Optional keys unlock more tools — Seedream/Seedance images and video (Volcano Ark), web search (Tavily), and the GPT-backed article writer. See the [provider table](docs/configuration.md#model-keys).
 
-## What The App Feels Like
+## 🖥️ The Workspace
 
-The main screen is intentionally simple:
+<p align="center">
+  <a href="assets/workspace.png"><img src="assets/workspace.png" width="860" alt="Open Creative Agent workspace: tldraw canvas on the left, chat on the right"></a>
+</p>
 
-- a tldraw canvas on the left for generated images, web pages, and other media;
-- a chat panel on the right for instructions, planning, progress, and final
-  answers;
-- follow-up editing through the same conversation;
-- local output files served from the running app.
+- **Left — canvas.** Generated images, rendered pages, and videos arrive as real tldraw objects: drag, arrange, zoom, compare versions.
+- **Right — chat.** The brief, the agent's plan, expandable thinking steps, and progress live here. Attach product photos or reference images directly.
+- **Iterate in place.** Every follow-up message edits the work in context.
+- **Download anything.** Finished artifacts are served straight from the local app.
 
-## Documentation
+## 🏗️ How It Works
 
-- [Configuration](docs/configuration.md): API keys, local server settings, and
-  startup flags.
-- [Development](docs/development.md): manual startup, project layout, tests, and
-  contribution notes.
+A single FastAPI process serves the API and the built React UI. Each chat request goes to an **orchestrator** that plans the task, then an **executor** dispatches steps to **20 specialist agents** — web search, design knowledge, ad copy, text-to-image and image editing (Nano Banana / Seedream), reasoning-driven generation, video (Veo / Seedance), image understanding and OCR, background removal, illustrated articles, posters, reference-based page recreation, UI generation, HTML page generation, and HTML-to-image rendering. Session state lives in local SQLite; generated files stay on your disk.
 
-## Project Status
+Details, project layout, and validation commands: [docs/development.md](docs/development.md).
 
-OCA is an early open-source local version of a larger creative-agent system. The
-focus of this repository is a runnable local workflow, clean UI, and practical
-creative output. Some provider-specific tools require their own API keys.
+## 📚 Documentation
+
+- [Configuration](docs/configuration.md) — API keys and what each unlocks, model selection, ports, startup flags.
+- [Development](docs/development.md) — manual startup, architecture, project layout, tests, contribution notes.
+
+## 🤝 Contributing & Roadmap
+
+The codebase is intentionally small and readable — one server, one UI, one agent package. PRs and issues are welcome.
+
+Directions we would love help with:
+
+- **Slides / PPT export** — bring deck generation to the local version
+- **Deep research agent** — long-horizon research reports feeding creative work
+- **More model providers** — additional image, video, and LLM backends
+- **Windows support** — a native startup path alongside the shell script
+- **UI polish and i18n** — the workspace is young and moving fast
+
+## ⭐ Star History
+
+<div align="center">
+  <a href="https://star-history.com/#GML-FMGroup/open-creative-agent&Date">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date&theme=dark" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date" />
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date" />
+    </picture>
+  </a>
+</div>
+
+<p align="center"><em>If OCA made something you like, a ⭐ helps more people find it.</em></p>
