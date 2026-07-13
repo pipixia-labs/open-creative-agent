@@ -29,6 +29,26 @@ that need a missing key simply are not used:
 | `SEGMIND_API_KEY` | Selected image tools (e.g. background processing) | [Segmind](https://segmind.com) |
 | `IMGBB_API_KEY` | Temporary image hosting used by some editing flows | [imgbb](https://api.imgbb.com) |
 
+## OpenAI Codex OAuth
+
+OCA can route selected LLM roles to `openai-codex/*` models. This follows the
+nanobot-style Codex OAuth path and does not use `OPENAI_API_KEY`.
+
+Login once before using Codex models:
+
+```bash
+./scripts/login_codex.py
+```
+
+Then set one or more model roles in `conf/jsons/system.json`:
+
+```json
+"article_llm_model": "openai-codex/gpt-5.5"
+```
+
+Codex routing is optional. It may reduce API-key usage, but it depends on the
+locally authenticated ChatGPT/Codex account and its usage limits.
+
 ## Model Selection
 
 Per-role model choices live in `conf/jsons/system.json`. Each entry accepts a
@@ -48,8 +68,8 @@ Notes:
   poster writing use `OPENAI_API_KEY` out of the box. Point it at a Gemini
   model (for example `gemini/gemini-3.5-flash`) to run article writing on your
   Google key only.
-- `conf/jsons/system_debug.json` is loaded instead of `system.json` when the
-  server runs with `ACA_ENV=debug`.
+- Use the `openai-codex/` prefix for roles that should use Codex OAuth instead
+  of `OPENAI_API_KEY`.
 
 Expert agents are registered in `conf/jsons/agent.json`. Setting an entry's
 `enable` flag to `false` removes it from the orchestrator's planning list

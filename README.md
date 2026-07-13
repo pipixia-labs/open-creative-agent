@@ -163,8 +163,6 @@ The codebase is intentionally small and readable — one server, one UI, one age
 
 Directions we would love help with:
 
-- **Slides / PPT export** — bring deck generation to the local version
-- **Deep research agent** — long-horizon research reports feeding creative work
 - **More model providers** — additional image, video, and LLM backends
 - **Windows support** — a native startup path alongside the shell script
 - **UI polish and i18n** — the workspace is young and moving fast

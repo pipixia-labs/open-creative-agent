@@ -216,3 +216,8 @@ CLAUDE.md
 test_session_api.py
 api_doc_latest.md
 register_debug.md
+
+# Local planning artifacts
+task_plan.md
+findings.md
+progress.md

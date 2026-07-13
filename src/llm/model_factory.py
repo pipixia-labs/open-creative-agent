@@ -7,6 +7,8 @@ from google.adk.models.lite_llm import LiteLlm
 from google.genai import types
 
 from conf.system import SYS_CONFIG
+from src.llm.openai_codex_model import OpenAICodexModel
+from src.llm.openai_codex_model import is_openai_codex_model
 
 
 def is_gemini_model(model_name: str) -> bool:
@@ -19,7 +21,8 @@ def is_openai_model(model_name: str) -> bool:
     """Return True when model string points to OpenAI family."""
     value = (model_name or "").lower().strip()
     return (
-        value.startswith("openai/")
+        is_openai_codex_model(value)
+        or value.startswith("openai/")
         or "gpt-" in value
         or value.startswith("o1")
         or value.startswith("o3")
@@ -67,10 +70,20 @@ def build_model_and_config(
 
     Rules:
     - Gemini family: use native Gemini adapter with unified thinking level.
-    - Non-Gemini family: use LiteLlm.
+    - OpenAI Codex family: use Codex OAuth Responses API adapter.
+    - Other non-Gemini family: use LiteLlm.
     - OpenAI family: map unified thinking level to reasoning_effort.
     """
     effective_thinking_level = thinking_level or SYS_CONFIG.thinking_level
+
+    if is_openai_codex_model(model_name):
+        return (
+            OpenAICodexModel(
+                model=model_name,
+                reasoning_effort=openai_reasoning_effort(effective_thinking_level),
+            ),
+            None,
+        )
 
     if is_gemini_model(model_name):
         gemini_model = Gemini(model=normalize_gemini_model_name(model_name))
