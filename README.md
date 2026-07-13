@@ -23,6 +23,11 @@
 
 One `git clone`, one script, one browser tab. No Docker, no account, no cloud backend.
 
+<p align="center">
+  <a href="assets/demo.gif"><img src="assets/demo.gif" width="860" alt="Open Creative Agent demo: a brief becomes a finished poster, then gets refined by one follow-up message"></a>
+  <br><sub>A real session at ~14× speed: search → design → generate → render → refine by conversation.</sub>
+</p>
+
 <table align="center">
   <tr>
     <td align="center"><a href="assets/examples/poster-edit-final.png"><img src="assets/examples/poster-edit-final.png" height="210" alt="Poster refined over four chat turns"></a></td>

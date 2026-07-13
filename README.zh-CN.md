@@ -23,6 +23,11 @@
 
 一次 `git clone`，一个脚本，一个浏览器标签页。不需要 Docker、不需要注册账号、没有云端依赖。
 
+<p align="center">
+  <a href="assets/demo.gif"><img src="assets/demo.gif" width="860" alt="Open Creative Agent 演示：一条需求生成海报，再用一句话完成改稿"></a>
+  <br><sub>真实会话约 14 倍速：搜索 → 设计 → 生成 → 渲染 → 对话改稿。</sub>
+</p>
+
 <table align="center">
   <tr>
     <td align="center"><a href="assets/examples/poster-edit-final.png"><img src="assets/examples/poster-edit-final.png" height="210" alt="多轮对话打磨的海报"></a></td>
