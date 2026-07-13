@@ -13,6 +13,7 @@
   <img src="https://img.shields.io/badge/python-3.14-3776ab" alt="Python 3.14">
   <img src="https://img.shields.io/badge/runtime-local--first-2f855a" alt="Local-first">
   <img src="https://img.shields.io/badge/UI-React%20%2B%20tldraw-2563eb" alt="React + tldraw">
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="License: Apache-2.0"></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen" alt="PRs welcome">
 </p>
 
