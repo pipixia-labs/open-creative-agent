@@ -159,12 +159,10 @@ Details, project layout, and validation commands: [docs/development.md](docs/dev
 
 ## 🤝 Contributing & Roadmap
 
-The codebase is intentionally small and readable — one server, one UI, one agent package. PRs and issues are welcome.
+The codebase is intentionally small and readable — one server, one UI, one agent package. Issues and PRs are welcome, and if OCA makes something you like, a ⭐ helps more people find it.
 
 Directions we would love help with:
 
 - **More model providers** — additional image, video, and LLM backends
 - **Windows support** — a native startup path alongside the shell script
 - **UI polish and i18n** — the workspace is young and moving fast
-
-<p align="center"><em>If OCA made something you like, a ⭐ helps more people find it.</em></p>

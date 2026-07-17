@@ -159,7 +159,7 @@ cp .env.template .env      # 在 .env 里填入 GOOGLE_API_KEY
 
 ## 🤝 贡献与路线图
 
-代码库刻意保持小而可读 —— 一个服务、一个 UI、一个 agent 包。欢迎 PR 和 issue。
+代码库刻意保持小而可读 —— 一个服务、一个 UI、一个 agent 包。欢迎 issue 和 PR；如果 OCA 帮你做出了满意的作品，顺手点个 ⭐，能让更多人发现它。
 
 欢迎一起做的方向：
 
@@ -168,5 +168,3 @@ cp .env.template .env      # 在 .env 里填入 GOOGLE_API_KEY
 - **更多模型供应商** —— 接入更多图像、视频与 LLM 后端
 - **Windows 支持** —— 在 shell 脚本之外提供原生启动路径
 - **UI 打磨与国际化** —— 工作台还年轻，迭代很快
-
-<p align="center"><em>如果 OCA 帮你做出了满意的作品，点个 ⭐ 能让更多人发现它。</em></p>
