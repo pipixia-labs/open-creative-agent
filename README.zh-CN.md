@@ -169,16 +169,4 @@ cp .env.template .env      # 在 .env 里填入 GOOGLE_API_KEY
 - **Windows 支持** —— 在 shell 脚本之外提供原生启动路径
 - **UI 打磨与国际化** —— 工作台还年轻，迭代很快
 
-## ⭐ Star 历史
-
-<div align="center">
-  <a href="https://star-history.com/#GML-FMGroup/open-creative-agent&Date">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date&theme=dark" />
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date" />
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date" />
-    </picture>
-  </a>
-</div>
-
 <p align="center"><em>如果 OCA 帮你做出了满意的作品，点个 ⭐ 能让更多人发现它。</em></p>

@@ -167,16 +167,4 @@ Directions we would love help with:
 - **Windows support** — a native startup path alongside the shell script
 - **UI polish and i18n** — the workspace is young and moving fast
 
-## ⭐ Star History
-
-<div align="center">
-  <a href="https://star-history.com/#GML-FMGroup/open-creative-agent&Date">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date&theme=dark" />
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date" />
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=GML-FMGroup/open-creative-agent&type=Date" />
-    </picture>
-  </a>
-</div>
-
 <p align="center"><em>If OCA made something you like, a ⭐ helps more people find it.</em></p>
