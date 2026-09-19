@@ -2,7 +2,7 @@
 name = "open-creative-agent"
 version = "0.1.0"
 description = "Local-first creative multi-agent backend built with Google ADK."
-license = "Apache-2.0"
+license = "PolyForm-Noncommercial-1.0.0"
 license-files = ["LICENSE", "NOTICE"]
 requires-python = ">=3.14.0"
 dependencies = [

@@ -49,7 +49,7 @@ web/              React/tldraw browser UI source
 
 ## Local Architecture
 
-The open-source local version runs as one FastAPI process:
+The source-available local version runs as one FastAPI process:
 
 1. `scripts/start_local.sh` prepares the Python and web environments.
 2. The React/tldraw UI is built from `web/` into `server/static/`.

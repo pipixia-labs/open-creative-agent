@@ -1,4 +1,4 @@
-"""Structural tests for the local open-source runtime shape."""
+"""Structural tests for the local source-available runtime shape."""
 
 from __future__ import annotations
 
@@ -75,7 +75,7 @@ class TestLocalModeStructure(unittest.TestCase):
         self.assertNotIn('content: payload.final_output_text || payload.text || "Task completed."', app_source)
 
     def test_static_local_ui_uses_english_copy(self) -> None:
-        """The open-source local UI source should be English-only for public release."""
+        """The source-available local UI should be English-only for public release."""
         ui_files = [
             PROJECT_ROOT / "server" / "static" / "index.html",
             *sorted((PROJECT_ROOT / "web" / "src").rglob("*.ts")),

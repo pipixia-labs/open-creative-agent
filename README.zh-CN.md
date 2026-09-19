@@ -13,13 +13,13 @@
   <img src="https://img.shields.io/badge/python-3.14-3776ab" alt="Python 3.14">
   <img src="https://img.shields.io/badge/runtime-local--first-2f855a" alt="Local-first">
   <img src="https://img.shields.io/badge/UI-React%20%2B%20tldraw-2563eb" alt="React + tldraw">
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="License: Apache-2.0"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-PolyForm_Noncommercial_1.0.0-blue" alt="License: PolyForm Noncommercial 1.0.0"></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen" alt="PRs welcome">
 </p>
 
 </div>
 
-**Open Creative Agent（OCA）** 是一个开源、本地优先的**多智能体创意工作室**。你用自然语言描述目标 —— 需求、受众、文案、素材、约束条件 —— 编排器（orchestrator）会把任务规划并分发给 **20 个专家智能体**：搜索调研、设计知识、图像生成与编辑、视频、图文文章、海报、网页与 UI 页面。生成结果直接落在聊天旁边的 [tldraw](https://tldraw.dev) 无限画布上，可以随时查看、追问修改、下载。
+**Open Creative Agent（OCA）** 是一个源码可用、本地优先的**多智能体创意工作室**。你用自然语言描述目标 —— 需求、受众、文案、素材、约束条件 —— 编排器（orchestrator）会把任务规划并分发给 **20 个专家智能体**：搜索调研、设计知识、图像生成与编辑、视频、图文文章、海报、网页与 UI 页面。生成结果直接落在聊天旁边的 [tldraw](https://tldraw.dev) 无限画布上，可以随时查看、追问修改、下载。
 
 一次 `git clone`，一个脚本，一个浏览器标签页。不需要 Docker、不需要注册账号、没有云端依赖。
 
@@ -49,7 +49,7 @@
 
 ## 📢 动态
 
-- **2026-07** 🎉 首个开源版本发布：本地"聊天 + 画布"工作台，编排器调度 20 个专家智能体，端到端生成海报、商品视觉、图文文章、UI 页面和视频。
+- **2026-07** 🎉 首个公开版本发布：本地"聊天 + 画布"工作台，编排器调度 20 个专家智能体，端到端生成海报、商品视觉、图文文章、UI 页面和视频。
 
 ## 💡 为什么选 Open Creative Agent
 
@@ -168,3 +168,9 @@ cp .env.template .env      # 在 .env 里填入 GOOGLE_API_KEY
 - **更多模型供应商** —— 接入更多图像、视频与 LLM 后端
 - **Windows 支持** —— 在 shell 脚本之外提供原生启动路径
 - **UI 打磨与国际化** —— 工作台还年轻，迭代很快
+
+## ⚖️ 许可证
+
+Open Creative Agent 以 [PolyForm Noncommercial License 1.0.0](LICENSE) 作为源码可用许可证发布。在该许可证条款范围内，允许非商业用途。**任何商业用途都必须事先获得 GML-FMGroup 的书面许可，并另行签订商业授权。**
+
+之前已发布的版本仍适用其发布时附带的许可条款。

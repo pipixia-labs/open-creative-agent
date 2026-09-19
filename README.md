@@ -13,13 +13,13 @@
   <img src="https://img.shields.io/badge/python-3.14-3776ab" alt="Python 3.14">
   <img src="https://img.shields.io/badge/runtime-local--first-2f855a" alt="Local-first">
   <img src="https://img.shields.io/badge/UI-React%20%2B%20tldraw-2563eb" alt="React + tldraw">
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="License: Apache-2.0"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-PolyForm_Noncommercial_1.0.0-blue" alt="License: PolyForm Noncommercial 1.0.0"></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen" alt="PRs welcome">
 </p>
 
 </div>
 
-**Open Creative Agent (OCA)** is an open-source, local-first **multi-agent creative studio**. You describe the outcome in plain language — goal, audience, copy, source material, constraints — and an orchestrator plans the work across **20 specialist agents** for research, design knowledge, image generation and editing, video, articles, posters, and web/UI pages. Results land on a movable [tldraw](https://tldraw.dev) canvas next to the chat, ready to inspect, refine in follow-up messages, and download.
+**Open Creative Agent (OCA)** is a source-available, local-first **multi-agent creative studio**. You describe the outcome in plain language — goal, audience, copy, source material, constraints — and an orchestrator plans the work across **20 specialist agents** for research, design knowledge, image generation and editing, video, articles, posters, and web/UI pages. Results land on a movable [tldraw](https://tldraw.dev) canvas next to the chat, ready to inspect, refine in follow-up messages, and download.
 
 One `git clone`, one script, one browser tab. No Docker, no account, no cloud backend.
 
@@ -49,7 +49,7 @@ One `git clone`, one script, one browser tab. No Docker, no account, no cloud ba
 
 ## 📢 News
 
-- **2026-07** 🎉 Initial open-source release: local chat + canvas workspace, an orchestrator coordinating 20 specialist agents, and end-to-end generation of posters, product visuals, illustrated articles, UI pages, and videos.
+- **2026-07** 🎉 Initial public release: local chat + canvas workspace, an orchestrator coordinating 20 specialist agents, and end-to-end generation of posters, product visuals, illustrated articles, UI pages, and videos.
 
 ## 💡 Why Open Creative Agent
 
@@ -166,3 +166,9 @@ Directions we would love help with:
 - **More model providers** — additional image, video, and LLM backends
 - **Windows support** — a native startup path alongside the shell script
 - **UI polish and i18n** — the workspace is young and moving fast
+
+## ⚖️ License
+
+Open Creative Agent is source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE). Noncommercial use is permitted under those terms. **Any commercial use requires prior written permission and a separate commercial license from GML-FMGroup.**
+
+Previously published versions remain available under the license terms that accompanied those versions.
